@@ -61,7 +61,7 @@ SwizzleMethod(Class _class, SEL _originSelector, SEL _newSelector) {
     }];
 }
 
-- (void)setScrollViews:(NSMutableSet *)scrollViews {
+- (void)setScrollViews:(NSPointerArray *)scrollViews {
     objc_setAssociatedObject(self, @selector(scrollViews), scrollViews, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
