@@ -150,12 +150,13 @@ SwizzleMethod(Class _class, SEL _originSelector, SEL _newSelector) {
     BOOL willDealloc = [objc_getAssociatedObject(self, @selector(safe_will_dealloc)) boolValue];
     
     if (!willDealloc) {
-        if (delegate) {
-            [[(NSObject *)delegate iOS8DelegateCleaner] recordDelegatedScrollView:self];
-        } else {
-            id _delegate = object_getIvarValue(self, "_delegate");
+        id _delegate = object_getIvarValue(self, "_delegate");
+        
+        if (_delegate != delegate) {
             [[(NSObject *)_delegate iOS8DelegateCleaner] removeDelegatedScrollView:self];
+            [[(NSObject *)delegate iOS8DelegateCleaner] recordDelegatedScrollView:self];
         }
+        
     }
     
     [self safe_setDelegate:delegate];
